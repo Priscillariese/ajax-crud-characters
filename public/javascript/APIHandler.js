@@ -1,25 +1,63 @@
+import axios from 'axios'
+
 class APIHandler {
   constructor (baseUrl) {
     this.BASE_URL = baseUrl;
   }
 
-  getFullList () {
-
+  async getFullList () {
+    try {
+      const response = await axios.get(`${this.BASE_URL}/characters`);
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (error) {
+      console.log(error)
+      return []
+    }
   }
 
-  getOneRegister () {
-
+  async getOneRegister (id) {
+    try {
+      const response = await axios.get(`${this.BASE_URL}/characters/${id}`);
+      if(response.status === 200) {
+        return response.data;
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
-  createOneRegister () {
-
+  async createOneRegister (characterData) {
+    try {
+      const response = await axios.post(`${this.BASE_URL}/characters`, characterData);
+      if(response.status === 201) {
+        return response.data;
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  updateOneRegister () {
-
+  async updateOneRegister (id, characterData) {
+    try {
+      const response = await axios.put(`${this.BASE_URL}/characters/${id}`, characterData)
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
-  deleteOneRegister () {
-
+  async deleteOneRegister (id) {
+    try {
+      const response = await axios.delete(`${this.BASE_URL}/characters/${id}`)
+      if(response.status === 200) {
+        return "Character has been successfully deleted"
+      } 
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
